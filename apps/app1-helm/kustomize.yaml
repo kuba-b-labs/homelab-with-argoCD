@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-helm-kustomize
+spec:
+  project: default
+  source:
+    path: charts/app1-helm
+    repoURL: 'https://github.com/kuba-b-labs/homelab-with-argoCD.git'
+    targetRevision: HEAD
+  destination:
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+

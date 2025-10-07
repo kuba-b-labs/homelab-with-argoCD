@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app2-postgres
+  labels:
+    app: myapp2-postgres
+spec:
+  ports:
+    - port: 8080
+      name: {{ .Release.Name }}-postgres
+  clusterIP: None
+  selector:
+    app: myapp2-postgres

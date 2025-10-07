@@ -1,0 +1,10 @@
+# https://kubernetes.io/docs/concepts/configuration/configmap/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap1
+  namespace: default
+data:
+  POSTGRES_PASSWORD: randompassword21
+  POSTGRES_USER: test
+---

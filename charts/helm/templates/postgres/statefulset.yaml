@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-statefulset
+  labels:
+    app: {{ .Release.Name }}-postgres
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-postgres
+  serviceName: my-app2-postgres
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-postgres
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: postgres
+          image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
+          ports:
+            - containerPort: {{ .Values.postgres.image.port }}
+
+          envFrom:
+            - configMapRef:
+                name: postgres-configmap1
+
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: setup
+              mountPath: /docker-entrypoint-initdb.d/setup.sh
+              subPath: setup.sh
+            - name: setup
+              mountPath: /docker-entrypoint-initdb.d/replication.sql 
+              subPath: replication.sql
+      volumes:
+        - name: setup
+          configMap: 
+            name: postgres-configmap
+
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+

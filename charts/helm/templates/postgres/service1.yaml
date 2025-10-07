@@ -1,0 +1,32 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: rw-service
+  namespace: default
+spec:
+  selector:
+    app: {{ .Release.Name }}-postgres
+    apps.kubernetes.io/pod-index: "0"
+  type: 
+  ports:
+  - protocol: TCP
+    port: {{ .Values.postgres.image.port }}
+    targetPort: {{ .Values.postgres.image.port }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ro-service
+  namespace: default
+spec:
+  selector:
+    app: {{ .Release.Name }}-postgres
+  type: 
+  ports:
+  - protocol: TCP
+    port: {{ .Values.postgres.image.port }}
+    targetPort: {{ .Values.postgres.image.port }}
+---

@@ -1,0 +1,28 @@
+# https://kubernetes.io/docs/concepts/configuration/configmap/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+  namespace: default
+data:
+  POSTGRES_PASSWORD: randompassword21
+  POSTGRES_USER: test
+  setup.sh: |
+    #!/bin/bash
+    set -e
+
+    if [[ "$(hostname)" == *-0 ]]; then
+      echo "Starting PRIMARY..."
+      echo "host  replication all 0.0.0.0/0 trust" >> /var/lib/postgresql/data/pg_hba.conf
+      exec docker-entrypoint.sh postgres
+    else
+      echo "Starting REPLICA..."
+      rm -rf /var/lib/postgresql/data/*
+      PGPASSWORD=$POSTGRES_PASSWORD pg_basebackup -h my-statefulset-0.my-app2-postgres.default.svc.cluster.local -D /var/lib/postgresql/data -U repl -Fp -Xs -P -R
+      exec docker-entrypoint.sh postgres
+    fi
+  replication.sql: |
+    CREATE USER repl WITH REPLICATION ENCRYPTED PASSWORD 'replicator_password';
+    SELECT pg_create_physical_replication_slot('replication_slot');
+---
+

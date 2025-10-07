@@ -5,7 +5,7 @@ metadata:
 spec:
   project: default
   source:
-    path: charts/app1-helm
+    path: charts/helm
     repoURL: 'https://github.com/kuba-b-labs/homelab-with-argoCD.git'
     targetRevision: HEAD
   destination:

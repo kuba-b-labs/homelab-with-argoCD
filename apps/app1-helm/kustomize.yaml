@@ -8,6 +8,8 @@ spec:
     path: charts/helm
     repoURL: 'https://github.com/kuba-b-labs/homelab-with-argoCD.git'
     targetRevision: HEAD
+    helm:
+      releaseName: mychart
   destination:
     namespace: test
     server: 'https://kubernetes.default.svc'

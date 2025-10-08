@@ -8,11 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    chart: helm
     repoURL: 'https://github.com/kuba-b-labs/homelab-with-argoCD.git'
-    targetRevision: HEAD
-    helm:
-      releaseName: mychart
+    targetRevision: main
+    path: charts/helm
   destination:
     namespace: app1
     server: 'https://kubernetes.default.svc'

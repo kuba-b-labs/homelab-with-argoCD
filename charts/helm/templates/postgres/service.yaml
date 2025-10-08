@@ -7,8 +7,8 @@ metadata:
     app: myapp2-postgres
 spec:
   ports:
-    - port: 8080
+    - port: {{ .Values.postgres.service.port }}
       name: {{ .Release.Name }}-postgres
   clusterIP: None
   selector:
-    app: myapp2-postgres
+    app: {{ .Release.Name }}-postgres

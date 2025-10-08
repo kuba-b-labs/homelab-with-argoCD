@@ -17,7 +17,7 @@ data:
     else
       echo "Starting REPLICA..."
       rm -rf /var/lib/postgresql/data/*
-      PGPASSWORD=$POSTGRES_PASSWORD pg_basebackup -h my-statefulset-0.my-app2-postgres.app1.svc.cluster.local -D /var/lib/postgresql/data -U repl -Fp -Xs -P -R
+      PGPASSWORD=$POSTGRES_PASSWORD pg_basebackup -h my-statefulset-0.my-app2-postgres.default.svc.cluster.local -D /var/lib/postgresql/data -U repl -Fp -Xs -P -R
       exec docker-entrypoint.sh postgres
     fi
   replication.sql: |

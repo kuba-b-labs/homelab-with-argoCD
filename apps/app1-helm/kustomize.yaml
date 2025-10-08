@@ -2,15 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: test-helm-kustomize
+  namespace: argocd
+  finalizers:
+   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    path: charts/helm
+    chart: helm
     repoURL: 'https://github.com/kuba-b-labs/homelab-with-argoCD.git'
     targetRevision: HEAD
     helm:
       releaseName: mychart
   destination:
-    namespace: test
+    namespace: app1
     server: 'https://kubernetes.default.svc'
 

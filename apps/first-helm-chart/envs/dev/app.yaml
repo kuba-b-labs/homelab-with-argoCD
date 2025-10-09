@@ -11,3 +11,4 @@ spec:
     path: apps/first-helm-chart/base
   destination:
     server: https://kubernetes.default.svc
+    namespace: app1

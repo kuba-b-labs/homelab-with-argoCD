@@ -3,5 +3,5 @@ kind: Kustomization
 
 helmCharts:
   - name: mychart 
-    path: .
+    path: ./
     releaseName: first-helm-chart

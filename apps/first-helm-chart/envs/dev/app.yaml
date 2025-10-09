@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-first-helm-chart
+  namespace: argocd
+spec:
+  project: default 
+  source:
+    repoURL: https://github.com/kuba-b-labs/homelab-with-argoCD.git
+    targetRevision: HEAD
+    path: apps/first-helm-chart/base
+  destination:
+    server: https://kubernetes.default.svc

@@ -22,7 +22,7 @@ spec:
         targetRevision: HEAD
         path: '{{ printf "charts/%s/base" (index .path.segments 1) }}'
         helm:
-          releaseName: {{index .path.segments 1}}
+          releaseName: '{{index .path.segments 1}}'
           valueFiles:
           - '{{.path.path}}/values.yaml'
       destination:

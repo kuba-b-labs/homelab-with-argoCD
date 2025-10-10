@@ -24,7 +24,15 @@ spec:
         helm:
           releaseName: '{{index .path.segments 1}}'
           valueFiles:
-          - '{{.path.path}}/values.yaml'
+          - 'values.yaml'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{index .path.segments 1}}-{{index .path.segments 3}}'
+    syncPolicy:
+        automated:
+          prune: true
+          enabled: true 
+
+        syncOptions:
+          - CreateNamespace=true
+

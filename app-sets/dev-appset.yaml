@@ -20,7 +20,7 @@ spec:
       source:
         repoURL: https://github.com/kuba-b-labs/homelab-with-argoCD.git
         targetRevision: HEAD
-        path: 'charts/{{index .path.segments 1}}/base'
+        path: '{{ printf "charts/%s/base" (index .path.segments 1) }}'
         helm:
           releaseName: {{index .path.segments 1}}
           valueFiles:
